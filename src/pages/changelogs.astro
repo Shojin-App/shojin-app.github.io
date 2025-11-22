@@ -1,13 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { marked } from 'marked';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { marked } from "marked";
 
 // GitHubからCHANGELOGファイルを取得
-const CHANGELOG_URL = 'https://github.com/Shojin-App/shojin_app/raw/refs/heads/main/CHANGELOG.md';
-let changelogContent = '';
-let errorMessage = '';
+const CHANGELOG_URL =
+  "https://github.com/Shojin-App/shojin_app/raw/refs/heads/main/CHANGELOG.md";
+let changelogContent = "";
+let errorMessage = "";
 
 try {
   const response = await fetch(CHANGELOG_URL);
@@ -16,29 +17,36 @@ try {
     // MarkdownをHTMLに変換
     changelogContent = await marked(changelogText);
   } else {
-    errorMessage = 'CHANGELOGの取得に失敗しました。';
+    errorMessage = "CHANGELOGの取得に失敗しました。";
   }
 } catch (error) {
-  errorMessage = 'CHANGELOGの読み込み中にエラーが発生しました。';
+  errorMessage = "CHANGELOGの読み込み中にエラーが発生しました。";
 }
 
-const htmlContent = errorMessage 
+const htmlContent = errorMessage
   ? `<div class="error-message"><p>${errorMessage}</p></div>`
   : `<div class="changelog-content">${changelogContent}</div>`;
 ---
 
-<Layout title="Changelogs | Shojin-App" description="Shojin Appの変更履歴・リリースノート">
+<Layout
+  title="Changelogs | Shojin-App"
+  description="Shojin Appの変更履歴・リリースノート"
+>
   <Header />
   <main>
     <div class="container">
       <div class="changelog-header">
         <h1>Changelogs</h1>
         <p>
-          Changelogs of all Shojin App stable releases, which are also available on <a href="https://github.com/Shojin-App/shojin_app/releases" target="_blank">GitHub</a>.
+          Changelogs of all Shojin App stable releases, which are also available
+          on <a
+            href="https://github.com/Shojin-App/shojin_app/releases"
+            target="_blank">GitHub</a
+          >.
         </p>
         <div class="divider"></div>
       </div>
-      
+
       <article class="markdown-body" set:html={htmlContent} />
     </div>
   </main>
@@ -46,26 +54,26 @@ const htmlContent = errorMessage
 </Layout>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const article = document.querySelector('.markdown-body');
+  document.addEventListener("DOMContentLoaded", () => {
+    const article = document.querySelector(".markdown-body");
     if (!article) return;
 
     // バージョン見出し (h1) の処理
-    const h1s = article.querySelectorAll('h1');
+    const h1s = article.querySelectorAll("h1");
     h1s.forEach((h1, index) => {
       // バージョン番号のコンテナを作成
-      const wrapper = document.createElement('div');
-      wrapper.className = 'version-header';
-      
+      const wrapper = document.createElement("div");
+      wrapper.className = "version-header";
+
       // 元のh1をラップする前に、h1の内容を移動
       h1.parentNode?.insertBefore(wrapper, h1);
       wrapper.appendChild(h1);
 
       // 最新バージョンに "Latest" バッジを追加
       if (index === 0) {
-        const badge = document.createElement('span');
-        badge.className = 'badge latest';
-        badge.textContent = 'Latest';
+        const badge = document.createElement("span");
+        badge.className = "badge latest";
+        badge.textContent = "Latest";
         wrapper.appendChild(badge);
       }
 
@@ -74,17 +82,17 @@ const htmlContent = errorMessage
     });
 
     // セクション見出し (h2) にアイコンを追加
-    const h2s = article.querySelectorAll('h2');
-    h2s.forEach(h2 => {
-      const text = h2.textContent?.toLowerCase() || '';
-      let icon = '';
-      
-      if (text.includes('improvement') || text.includes('feature')) {
-        icon = '🚀';
-      } else if (text.includes('fix')) {
-        icon = '🧩'; // または 🐛
-      } else if (text.includes('change')) {
-        icon = '📝';
+    const h2s = article.querySelectorAll("h2");
+    h2s.forEach((h2) => {
+      const text = h2.textContent?.toLowerCase() || "";
+      let icon = "";
+
+      if (text.includes("improvement") || text.includes("feature")) {
+        icon = "🚀";
+      } else if (text.includes("fix")) {
+        icon = "🧩"; // または 🐛
+      } else if (text.includes("change")) {
+        icon = "📝";
       }
 
       if (icon) {
@@ -93,8 +101,8 @@ const htmlContent = errorMessage
     });
 
     // BlockquoteをTipスタイルに
-    const blockquotes = article.querySelectorAll('blockquote');
-    blockquotes.forEach(bq => {
+    const blockquotes = article.querySelectorAll("blockquote");
+    blockquotes.forEach((bq) => {
       const content = bq.innerHTML;
       bq.innerHTML = `<div class="tip-title">TIP</div><div class="tip-content">${content}</div>`;
     });
@@ -130,7 +138,7 @@ const htmlContent = errorMessage
     color: #8ab4f8; /* リンク色（青系） */
     text-decoration: none;
   }
-  
+
   .changelog-header a:hover {
     text-decoration: underline;
   }
