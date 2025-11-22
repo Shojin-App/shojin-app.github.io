@@ -24,162 +24,240 @@ try {
 
 const htmlContent = errorMessage 
   ? `<div class="error-message"><p>${errorMessage}</p></div>`
-  : `<div class="changelog-intro">
-      <h1>変更履歴</h1>
-      <p>
-        Shojin Appの最新の変更履歴をご覧いただけます。新機能の追加、バグ修正、改善点などをバージョンごとに記録しています。
-      </p>
-      <div class="button-group">
-        <a href="${CHANGELOG_URL}" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="button primary">
-          <i>open_in_new</i>
-          <span>GitHubで見る</span>
-        </a>
-      </div>
-    </div>
-    <div class="changelog-content">${changelogContent}</div>`;
+  : `<div class="changelog-content">${changelogContent}</div>`;
 ---
 
-<Layout title="変更履歴 | Shojin-App" description="Shojin Appの変更履歴・リリースノート">
+<Layout title="Changelogs | Shojin-App" description="Shojin Appの変更履歴・リリースノート">
   <Header />
-  <main class="responsive">
-    <div class="large-padding">
-      <article class="markdown-content" set:html={htmlContent} />
+  <main>
+    <div class="container">
+      <div class="changelog-header">
+        <h1>Changelogs</h1>
+        <p>
+          Changelogs of all Shojin App stable releases, which are also available on <a href="https://github.com/Shojin-App/shojin_app/releases" target="_blank">GitHub</a>.
+        </p>
+        <div class="divider"></div>
+      </div>
+      
+      <article class="markdown-body" set:html={htmlContent} />
     </div>
   </main>
   <Footer />
 </Layout>
 
-<style>
-  .markdown-content {
-    max-width: 900px;
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const article = document.querySelector('.markdown-body');
+    if (!article) return;
+
+    // バージョン見出し (h1) の処理
+    const h1s = article.querySelectorAll('h1');
+    h1s.forEach((h1, index) => {
+      // バージョン番号のコンテナを作成
+      const wrapper = document.createElement('div');
+      wrapper.className = 'version-header';
+      
+      // 元のh1をラップする前に、h1の内容を移動
+      h1.parentNode?.insertBefore(wrapper, h1);
+      wrapper.appendChild(h1);
+
+      // 最新バージョンに "Latest" バッジを追加
+      if (index === 0) {
+        const badge = document.createElement('span');
+        badge.className = 'badge latest';
+        badge.textContent = 'Latest';
+        wrapper.appendChild(badge);
+      }
+
+      // 日付があれば抽出して表示（Markdownの形式によるが、ここでは仮に次のpタグが日付だと仮定、またはh1内に日付が含まれる場合を考慮）
+      // 今回はシンプルな実装として、h1の下に日付用のプレースホルダーを追加しない（Markdownの内容依存のため）
+    });
+
+    // セクション見出し (h2) にアイコンを追加
+    const h2s = article.querySelectorAll('h2');
+    h2s.forEach(h2 => {
+      const text = h2.textContent?.toLowerCase() || '';
+      let icon = '';
+      
+      if (text.includes('improvement') || text.includes('feature')) {
+        icon = '🚀';
+      } else if (text.includes('fix')) {
+        icon = '🧩'; // または 🐛
+      } else if (text.includes('change')) {
+        icon = '📝';
+      }
+
+      if (icon) {
+        h2.innerHTML = `<span class="section-icon">${icon}</span> ${h2.innerHTML}`;
+      }
+    });
+
+    // BlockquoteをTipスタイルに
+    const blockquotes = article.querySelectorAll('blockquote');
+    blockquotes.forEach(bq => {
+      const content = bq.innerHTML;
+      bq.innerHTML = `<div class="tip-title">TIP</div><div class="tip-content">${content}</div>`;
+    });
+  });
+</script>
+
+<style is:global>
+  /* グローバルスタイルとして適用してMarkdown内の要素にも効かせる */
+  .container {
+    max-width: 800px;
     margin: 0 auto;
-    line-height: 1.8;
+    padding: 2rem 1.5rem;
   }
 
-  .changelog-intro {
-    background: var(--surface-container);
-    padding: 1.5rem;
-    border-radius: var(--radius-large);
-    margin-bottom: 2rem;
+  .changelog-header {
+    margin-bottom: 3rem;
   }
 
-  .changelog-intro h1 {
-    font-size: 2rem;
+  .changelog-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary);
+    color: var(--on-background);
   }
 
-  .changelog-intro p {
+  .changelog-header p {
     font-size: 1.1rem;
-    margin-bottom: 0;
+    color: var(--on-surface-variant);
+    line-height: 1.6;
   }
 
-  .button-group {
-    margin-top: 1.5rem;
-  }
-
-  .button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.75rem;
-    border-radius: var(--radius-large);
+  .changelog-header a {
+    color: #8ab4f8; /* リンク色（青系） */
     text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
-  .button.primary {
-    background: var(--primary);
-    color: var(--on-primary);
-  }
-
-  .button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  .changelog-content h1 {
-    font-size: 2rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary);
-  }
-
-  .changelog-content h2 {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    color: var(--primary);
-  }
-
-  .changelog-content h3 {
-    font-size: 1.2rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .changelog-content p {
-    margin-bottom: 1rem;
-  }
-
-  .changelog-content ul, .changelog-content ol {
-    margin-bottom: 1rem;
-    padding-left: 2rem;
-  }
-
-  .changelog-content li {
-    margin-bottom: 0.5rem;
-  }
-
-  .changelog-content code {
-    background: var(--surface-container-high);
-    padding: 0.2rem 0.4rem;
-    border-radius: var(--radius-small);
-    font-family: monospace;
-    font-size: 0.9rem;
-  }
-
-  .changelog-content pre {
-    background: var(--surface-container);
-    padding: 1rem;
-    border-radius: var(--radius-medium);
-    overflow-x: auto;
-    margin-bottom: 1rem;
-  }
-
-  .changelog-content pre code {
-    background: none;
-    padding: 0;
-  }
-
-  .changelog-content a {
-    color: var(--primary);
+  
+  .changelog-header a:hover {
     text-decoration: underline;
   }
 
-  .changelog-content a:hover {
-    opacity: 0.8;
+  .divider {
+    height: 1px;
+    background-color: var(--outline-variant);
+    margin-top: 2rem;
+    opacity: 0.3;
   }
 
-  .changelog-content blockquote {
-    border-left: 4px solid var(--primary);
-    padding-left: 1rem;
-    margin: 1rem 0;
-    font-style: italic;
+  /* Markdown Content Styles */
+  .markdown-body {
+    color: var(--on-background);
+    line-height: 1.7;
+  }
+
+  /* Version Header */
+  .version-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .markdown-body h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    border: none; /* 以前のスタイルをリセット */
+    padding: 0;
+  }
+
+  .badge.latest {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Sections */
+  .markdown-body h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--on-background);
+  }
+
+  .section-icon {
+    font-size: 1.4rem;
+  }
+
+  .markdown-body ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .markdown-body li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
     color: var(--on-surface-variant);
   }
 
+  .markdown-body li::before {
+    content: "•";
+    position: absolute;
+    left: 0.25rem;
+    color: var(--on-surface-variant);
+    font-weight: bold;
+  }
+
+  /* Links in markdown */
+  .markdown-body a {
+    color: #8ab4f8;
+    text-decoration: none;
+  }
+
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+
+  /* Tip Box (Blockquote) */
+  .markdown-body blockquote {
+    background-color: rgba(138, 180, 248, 0.1); /* 薄い青背景 */
+    border: 1px solid rgba(138, 180, 248, 0.3);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    color: var(--on-surface);
+  }
+
+  .tip-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #8ab4f8; /* タイトル色 */
+    text-transform: uppercase;
+  }
+
+  .tip-content p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* Code blocks */
+  .markdown-body code {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+
   .error-message {
-    background: var(--error-container);
-    color: var(--on-error-container);
-    padding: 1.5rem;
-    border-radius: var(--radius-medium);
-    margin-top: 2rem;
+    color: var(--error);
+    text-align: center;
+    padding: 2rem;
   }
 </style>
