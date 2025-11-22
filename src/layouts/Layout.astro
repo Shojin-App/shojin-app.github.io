@@ -18,19 +18,28 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
     <link rel="apple-touch-icon" href="/app_icon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <script is:inline>
       const getTheme = () => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
         }
-        return 'light';
+        return "light";
       };
       const theme = getTheme();
       document.body.classList.add(theme);
@@ -42,69 +51,73 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
     </script>
     <style is:global>
       /* Import Roboto Flex for Material 3 Expressive */
-      @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700;8..144,800&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700;8..144,800&display=swap");
 
       :root {
         /* Material 3 Expressive Color Palette */
-        --primary: #6750A4; /* Deep Purple */
-        --secondary: #625B71; /* Neutral Purple Grey */
-        --tertiary: #7D5260; /* Tertiary Accent */
-        --error: #BA1A1A;
-        
+        --primary: #6750a4; /* Deep Purple */
+        --secondary: #625b71; /* Neutral Purple Grey */
+        --tertiary: #7d5260; /* Tertiary Accent */
+        --error: #ba1a1a;
+
         /* Typography - using Roboto Flex as primary, Inter as fallback */
-        font-family: 'Roboto Flex', 'Inter', sans-serif;
-        
+        font-family: "Roboto Flex", "Inter", sans-serif;
+
         /* Border Radius - Material 3 Expressive uses larger, bolder radii */
         --radius-small: 12px;
         --radius-medium: 20px;
         --radius-large: 28px;
         --radius-extra-large: 42px;
-        
+
         /* Elevation - deeper shadows for more depth */
-        --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
-        --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
-        --elevation-4: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+        --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.24);
+        --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.15),
+          0 2px 4px rgba(0, 0, 0, 0.12);
+        --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.15),
+          0 3px 6px rgba(0, 0, 0, 0.1);
+        --elevation-4: 0 15px 25px rgba(0, 0, 0, 0.15),
+          0 5px 10px rgba(0, 0, 0, 0.05);
       }
 
       body.dark {
-        --on-primary: #EADDFF;
-        --primary-container: #4F378B;
-        --on-primary-container: #EADDFF;
-        
+        --on-primary: #eaddff;
+        --primary-container: #4f378b;
+        --on-primary-container: #eaddff;
+
         --background: #0b0c0f; /* Very Dark Background */
         --surface: #15171c; /* Dark Card Background */
-        --surface-container: #1E1F25;
-        --surface-container-high: #292A30;
-        --surface-container-highest: #34353B;
-        
-        --on-background: #E6E1E5;
-        --on-surface: #E6E1E5;
-        --on-surface-variant: #CAC4D0;
-        
-        --outline: #938F99;
-        --outline-variant: #49454F;
+        --surface-container: #1e1f25;
+        --surface-container-high: #292a30;
+        --surface-container-highest: #34353b;
+
+        --on-background: #e6e1e5;
+        --on-surface: #e6e1e5;
+        --on-surface-variant: #cac4d0;
+
+        --outline: #938f99;
+        --outline-variant: #49454f;
       }
 
       body.light {
-        --on-primary: #FFFFFF;
-        --primary-container: #EADDFF;
-        --on-primary-container: #21005D;
-        
-        --background: #FFFBFE;
-        --surface: #FFFBFE;
-        --surface-container: #F3EDF7;
-        --surface-container-high: #ECE6F0;
-        --surface-container-highest: #E6E0E9;
-        
-        --on-background: #1C1B1F;
-        --on-surface: #1C1B1F;
-        --on-surface-variant: #49454F;
-        
-        --outline: #79747E;
-        --outline-variant: #CAC4D0;
+        --on-primary: #ffffff;
+        --primary-container: #eaddff;
+        --on-primary-container: #21005d;
+
+        --background: #fffbfe;
+        --surface: #fffbfe;
+        --surface-container: #f3edf7;
+        --surface-container-high: #ece6f0;
+        --surface-container-highest: #e6e0e9;
+
+        --on-background: #1c1b1f;
+        --on-surface: #1c1b1f;
+        --on-surface-variant: #49454f;
+
+        --outline: #79747e;
+        --outline-variant: #cac4d0;
       }
-      
+
       body {
         background-color: var(--background);
         color: var(--on-background);
@@ -112,7 +125,7 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
 
       /* Material 3 Expressive Typography Scale */
       .display-large {
-        font-family: 'Roboto Flex', sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 3.5rem;
         font-weight: 700;
         line-height: 1.15;
@@ -120,35 +133,35 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
       }
 
       .display-medium {
-        font-family: 'Roboto Flex', sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 2.8rem;
         font-weight: 700;
         line-height: 1.2;
       }
 
       .headline-large {
-        font-family: 'Roboto Flex', sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 2rem;
         font-weight: 600;
         line-height: 1.3;
       }
 
       .headline-medium {
-        font-family: 'Roboto Flex', sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 1.75rem;
         font-weight: 600;
         line-height: 1.3;
       }
 
       .title-large {
-        font-family: 'Roboto Flex', sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 1.375rem;
         font-weight: 600;
         line-height: 1.4;
       }
 
       .body-large {
-        font-family: 'Roboto Flex', sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.6;
@@ -156,7 +169,7 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
 
       /* Custom Utility Classes */
       .text-gradient {
-        background: linear-gradient(135deg, #6750A4 0%, #7D5260 100%);
+        background: linear-gradient(135deg, #6750a4 0%, #7d5260 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -167,7 +180,11 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
         position: absolute;
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(103, 80, 164, 0.2) 0%, rgba(11, 12, 15, 0) 70%);
+        background: radial-gradient(
+          circle,
+          rgba(103, 80, 164, 0.2) 0%,
+          rgba(11, 12, 15, 0) 70%
+        );
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -177,15 +194,16 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
       }
 
       .card-hover {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      
+
       .card-hover:hover {
         transform: translateY(-8px);
         box-shadow: var(--elevation-4);
       }
-      
+
       /* BeerCSS Overrides for Material 3 Expressive */
       .button.fill.primary {
         background: var(--primary);
@@ -208,7 +226,7 @@ const { title, description = "AtCoderの精進をスマホでも。" } = Astro.p
         font-weight: 600;
         border-width: 2px;
       }
-      
+
       nav.top-nav {
         padding: 1rem 2rem;
       }
