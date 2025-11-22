@@ -1,45 +1,92 @@
 <section class="responsive large-padding">
+  <div class="center-align">
+    <h2 class="headline large-text bold">主な機能</h2>
+    <p class="large-text opacity-text">競プロに必要な全てが、スマホひとつに</p>
+    <div class="space large"></div>
+  </div>
+
   <div class="grid">
-    <div class="s12 m4 l4">
-      <article class="fill surface large-padding rounded card-hover">
+    <!-- ブラウザ機能 -->
+    <div class="s12 m6 l4">
+      <article class="fill surface large-padding rounded card-hover feature-card">
         <div class="row">
-          <i class="large primary-text">code</i>
+          <i class="extra-large primary-text">public</i>
         </div>
         <div class="space"></div>
-        <h5 class="bold">快適なコーディング</h5>
+        <h5 class="bold">🌐 ブラウザ機能</h5>
         <p class="opacity-text">
-          シンタックスハイライト、補完機能付きエディタで、スマホでもストレスなくコードが書けます。
+          NoviSteps、Problemsなどの精進サイトを統合ブラウザで閲覧。カスタムサイトの追加も可能で、お気に入りの問題集にワンタップでアクセス。AtCoder問題ページから直接エディタ画面へスムーズに遷移できます。
         </p>
-        <div class="space"></div>
-        <a href="#" class="link primary-text">詳しく見る &rarr;</a>
       </article>
     </div>
-    <div class="s12 m4 l4">
-      <article class="fill surface large-padding rounded card-hover">
+
+    <!-- コードエディタ -->
+    <div class="s12 m6 l4">
+      <article class="fill surface large-padding rounded card-hover feature-card">
         <div class="row">
-          <i class="large secondary-text">play_arrow</i>
+          <i class="extra-large secondary-text">code</i>
         </div>
         <div class="space"></div>
-        <h5 class="bold">自動テスト</h5>
+        <h5 class="bold">📝 コードエディタ</h5>
         <p class="opacity-text">
-          サンプルケースをワンタップで実行・判定。提出前の確認がスムーズに行えます。
+          Python、C++、Rust、Javaに対応したシンタックスハイライト。言語別テンプレートのカスタマイズ、問題・言語ごとの自動保存機能。Wandbox APIでリアルタイム実行・テストが可能です。
         </p>
-        <div class="space"></div>
-        <a href="#" class="link secondary-text">使い方を見る &rarr;</a>
       </article>
     </div>
-    <div class="s12 m4 l4">
-      <article class="fill surface large-padding rounded card-hover">
+
+    <!-- テスト機能 -->
+    <div class="s12 m6 l4">
+      <article class="fill surface large-padding rounded card-hover feature-card">
         <div class="row">
-          <i class="large tertiary-text">event</i>
+          <i class="extra-large tertiary-text">bug_report</i>
         </div>
         <div class="space"></div>
-        <h5 class="bold">コンテスト管理</h5>
+        <h5 class="bold">🧪 テスト機能</h5>
         <p class="opacity-text">
-          開催予定のコンテストを確認し、リマインダー通知を受け取ることができます。
+          AtCoderのサンプルケースを自動テスト。AC/WA/RE/TLE/CEなど詳細なジャッジ結果を表示。入力・期待される出力・実際の出力を比較表示してデバッグを支援します。
         </p>
+      </article>
+    </div>
+
+    <!-- 問題管理 -->
+    <div class="s12 m6 l4">
+      <article class="fill surface large-padding rounded card-hover feature-card">
+        <div class="row">
+          <i class="extra-large">assignment</i>
+        </div>
         <div class="space"></div>
-        <a href="#" class="link tertiary-text">機能一覧 &rarr;</a>
+        <h5 class="bold">📋 問題管理</h5>
+        <p class="opacity-text">
+          問題文、制約、入出力形式を見やすく整理。AtCoder問題URLから情報を自動取得し、LaTeX記法にも対応。数式を含む問題文も適切に表示されます。
+        </p>
+      </article>
+    </div>
+
+    <!-- カスタマイズ -->
+    <div class="s12 m6 l4">
+      <article class="fill surface large-padding rounded card-hover feature-card">
+        <div class="row">
+          <i class="extra-large primary-text">palette</i>
+        </div>
+        <div class="space"></div>
+        <h5 class="bold">🎨 カスタマイズ</h5>
+        <p class="opacity-text">
+          ライト/ダーク/ピュアブラック/システム追従の4つのテーマ。Material You対応で壁紙に連動したカラーテーマ。ナビゲーションバーの透明度も調整可能です。
+        </p>
+      </article>
+    </div>
+
+    <!-- 提出機能 -->
+    <div class="s12 m6 l4">
+      <article class="fill surface large-padding rounded card-hover feature-card">
+        <div class="row">
+          <i class="extra-large secondary-text">upload</i>
+        </div>
+        <div class="space"></div>
+        <h5 class="bold">🚀 提出機能</h5>
+        <p class="opacity-text">
+          アプリ内WebViewでAtCoderの提出ページを開いて直接提出。アプリを離れることなく、コーディングからテスト、提出までシームレスに完結します。
+        </p>
       </article>
     </div>
   </div>
@@ -49,5 +96,23 @@
 <style>
   .opacity-text {
     opacity: 0.7;
+  }
+
+  .feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .feature-card i {
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover i {
+    transform: scale(1.1);
   }
 </style>
