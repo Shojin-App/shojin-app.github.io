@@ -102,11 +102,17 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .feature-icon {
     font-size: 3rem;
+    /* アイコンの欠けを防ぐための設定 */
+    display: inline-block;
+    line-height: 1;
+    width: 1em;
+    height: 1em;
+    overflow: visible;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
