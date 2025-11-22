@@ -1,18 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Features from '../components/Features.astro';
-import GetStarted from '../components/GetStarted.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Shojin-App | AtCoderの精進をスマホでも。">
+<Layout title="Shojin-App | Competitive Programming on Mobile">
+  <Header />
   <main>
     <Hero />
-    <div class="divider"></div>
+    <div class="space large"></div>
     <Features />
-    <div class="divider"></div>
-    <GetStarted />
+    <div class="space large"></div>
   </main>
   <Footer />
 </Layout>
