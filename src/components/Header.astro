@@ -6,34 +6,50 @@
     <button id="theme-toggle" class="circle transparent">
       <i class="material-symbols-rounded">light_mode</i>
     </button>
-    <a href="https://twitter.com/search?q=%23Shojin_App" target="_blank" class="button circle transparent twitter-button">
-      <img class="twitter-icon" src="/twitter-icon.svg" alt="Twitter">
+    <a
+      href="https://twitter.com/search?q=%23Shojin_App"
+      target="_blank"
+      class="button circle transparent twitter-button"
+    >
+      <img class="twitter-icon" src="/twitter-icon.svg" alt="Twitter" />
     </a>
-    <a href="https://github.com/Shojin-App/shojin_app" target="_blank" class="button circle transparent github-button">
-      <img class="github-icon github-icon-dark" src="/github-mark.svg" alt="GitHub">
-      <img class="github-icon github-icon-light" src="/github-mark-white.svg" alt="GitHub">
+    <a
+      href="https://github.com/Shojin-App/shojin_app"
+      target="_blank"
+      class="button circle transparent github-button"
+    >
+      <img
+        class="github-icon github-icon-dark"
+        src="/github-mark.svg"
+        alt="GitHub"
+      />
+      <img
+        class="github-icon github-icon-light"
+        src="/github-mark-white.svg"
+        alt="GitHub"
+      />
     </a>
   </nav>
 </header>
 
 <script>
-  const themeToggle = document.getElementById('theme-toggle');
-  const themeIcon = themeToggle?.querySelector('i');
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeIcon = themeToggle?.querySelector("i");
 
   const updateIcon = () => {
     if (!themeIcon) return;
-    const isDark = document.body.classList.contains('dark');
-    themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    const isDark = document.body.classList.contains("dark");
+    themeIcon.textContent = isDark ? "light_mode" : "dark_mode";
   };
 
   // Initial update
   updateIcon();
 
-  themeToggle?.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    document.body.classList.toggle('light');
-    const isDark = document.body.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  themeToggle?.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
     updateIcon();
   });
 </script>
@@ -121,7 +137,7 @@
   :global(body.dark) .twitter-icon {
     filter: brightness(0) invert(1); /* White in dark mode */
   }
-  
+
   :global(body.light) .twitter-icon {
     filter: brightness(0); /* Black in light mode */
   }
