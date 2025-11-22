@@ -3,5 +3,5 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://shojin-app.github.io',
+    site: 'https://shojin-app.github.io',
 });
