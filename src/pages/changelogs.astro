@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { marked } from 'marked';
+
+// GitHubからCHANGELOGファイルを取得
+const CHANGELOG_URL = 'https://github.com/Shojin-App/shojin_app/raw/refs/heads/main/CHANGELOG.md';
+let changelogContent = '';
+let errorMessage = '';
+
+try {
+  const response = await fetch(CHANGELOG_URL);
+  if (response.ok) {
+    const changelogText = await response.text();
+    // MarkdownをHTMLに変換
+    changelogContent = await marked(changelogText);
+  } else {
+    errorMessage = 'CHANGELOGの取得に失敗しました。';
+  }
+} catch (error) {
+  errorMessage = 'CHANGELOGの読み込み中にエラーが発生しました。';
+}
+
+const htmlContent = errorMessage 
+  ? `<div class="error-message"><p>${errorMessage}</p></div>`
+  : `<div class="changelog-intro">
+      <h1>変更履歴</h1>
+      <p>
+        Shojin Appの最新の変更履歴をご覧いただけます。新機能の追加、バグ修正、改善点などをバージョンごとに記録しています。
+      </p>
+      <div class="button-group">
+        <a href="${CHANGELOG_URL}" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="button primary">
+          <i>open_in_new</i>
+          <span>GitHubで見る</span>
+        </a>
+      </div>
+    </div>
+    <div class="changelog-content">${changelogContent}</div>`;
+---
+
+<Layout title="変更履歴 | Shojin-App" description="Shojin Appの変更履歴・リリースノート">
+  <Header />
+  <main class="responsive">
+    <div class="large-padding">
+      <article class="markdown-content" set:html={htmlContent} />
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .markdown-content {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .changelog-intro {
+    background: var(--surface-container);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .changelog-intro h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+  }
+
+  .changelog-intro p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+
+  .button-group {
+    margin-top: 1.5rem;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .button.primary {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .changelog-content h1 {
+    font-size: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+  }
+
+  .changelog-content h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+
+  .changelog-content h3 {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .changelog-content p {
+    margin-bottom: 1rem;
+  }
+
+  .changelog-content ul, .changelog-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+  }
+
+  .changelog-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .changelog-content code {
+    background: var(--surface-container);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+
+  .changelog-content pre {
+    background: var(--surface-container);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .changelog-content pre code {
+    background: none;
+    padding: 0;
+  }
+
+  .changelog-content a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .changelog-content a:hover {
+    opacity: 0.8;
+  }
+
+  .changelog-content blockquote {
+    border-left: 4px solid var(--primary);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: var(--on-surface-variant);
+  }
+
+  .error-message {
+    background: var(--error-container);
+    color: var(--on-error-container);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+</style>
